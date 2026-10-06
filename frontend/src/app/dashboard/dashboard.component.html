@@ -1,0 +1,148 @@
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">I</span>
+      <div>
+        <strong>Inventario</strong>
+        <small>Gestor de existencias</small>
+      </div>
+    </div>
+
+    <nav class="nav-list" aria-label="Navegación principal">
+      <a class="nav-item active" href="#inicio">
+        <span aria-hidden="true">⌂</span>
+        <span>Inicio</span>
+      </a>
+      <a class="nav-item" href="#productos">
+        <span aria-hidden="true">▦</span>
+        <span>Productos</span>
+      </a>
+      <a class="nav-item" href="#movimientos">
+        <span aria-hidden="true">↔</span>
+        <span>Movimientos</span>
+      </a>
+      <a class="nav-item" href="#reportes">
+        <span aria-hidden="true">◫</span>
+        <span>Reportes</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="avatar">GL</span>
+      <div>
+        <strong>Gustavo L.</strong>
+        <small>Administrador</small>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content" id="inicio">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Panel de control</p>
+        <h1>Inventario</h1>
+      </div>
+      <button class="button button-primary" type="button">+ Nuevo producto</button>
+    </header>
+
+    <section class="metrics" aria-label="Métricas del inventario">
+      <article class="metric-card">
+        <span class="metric-icon blue">▤</span>
+        <div>
+          <p>Total de productos</p>
+          <strong>{{ productos.length }}</strong>
+          <small>Registros activos</small>
+        </div>
+      </article>
+      <article class="metric-card">
+        <span class="metric-icon green">◫</span>
+        <div>
+          <p>Unidades en stock</p>
+          <strong>{{ totalStock }}</strong>
+          <small>Unidades disponibles</small>
+        </div>
+      </article>
+      <article class="metric-card">
+        <span class="metric-icon orange">!</span>
+        <div>
+          <p>Productos bajos</p>
+          <strong>{{ productosBajos }}</strong>
+          <small>Necesitan atención</small>
+        </div>
+      </article>
+      <article class="metric-card">
+        <span class="metric-icon purple">✓</span>
+        <div>
+          <p>Productos activos</p>
+          <strong>{{ productosActivos }}</strong>
+          <small>Con existencias</small>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="productos">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">Catálogo</p>
+          <h2>Productos y categorías</h2>
+        </div>
+        <div class="controls">
+          <label class="filter-select">
+            <span class="visually-hidden">Categoría</span>
+            <select [(ngModel)]="categoriaSeleccionada" aria-label="Filtrar por categoría">
+              <option value="">Todas las categorías</option>
+              @for (categoria of categorias; track categoria) {
+                <option [value]="categoria">{{ categoria }}</option>
+              }
+            </select>
+          </label>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input [(ngModel)]="terminoBusqueda" type="search" placeholder="Buscar producto..." aria-label="Buscar producto" />
+          </label>
+        </div>
+      </div>
+
+      <div class="category-strip" aria-label="Resumen de categorías">
+        @for (categoria of categorias; track categoria) {
+          <button type="button" [class.active]="categoriaSeleccionada === categoria" (click)="categoriaSeleccionada = categoria === categoriaSeleccionada ? '' : categoria">
+            {{ categoria }}
+            <span>{{ cantidadPorCategoria(categoria) }}</span>
+          </button>
+        }
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Código</th>
+              <th>Stock</th>
+              <th>Precio</th>
+              <th>Estado</th>
+              <th aria-label="Acciones"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (producto of productosFiltrados; track producto.codigo) {
+              <tr>
+                <td>
+                  <div class="product-cell">
+                    <span class="product-icon">{{ producto.nombre.charAt(0) }}</span>
+                    <div><strong>{{ producto.nombre }}</strong><small>{{ producto.categoria }}</small></div>
+                  </div>
+                </td>
+                <td>{{ producto.codigo }}</td>
+                <td><strong>{{ producto.stock }}</strong> unidades</td>
+                <td>{{ producto.precio | currency:'COP' }}</td>
+                <td><span class="status" [class]="producto.estado.toLowerCase().replaceAll(' ', '-')">{{ producto.estado }}</span></td>
+                <td><button class="icon-button" type="button" aria-label="Ver producto">›</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
