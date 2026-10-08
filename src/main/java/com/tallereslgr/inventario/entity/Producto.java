@@ -31,6 +31,7 @@ public class Producto {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
     @Column(name = "precio_costo", nullable = false)
@@ -51,7 +52,10 @@ public class Producto {
     @Column(name = "fecha_registro", updatable = false)
     private LocalDateTime fechaRegistro;
 
+    @Column(nullable = false, columnDefinition = "TINYINT(1) NOT NULL DEFAULT 1")
+    private boolean activo = true;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoria_id", nullable = true)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 }
