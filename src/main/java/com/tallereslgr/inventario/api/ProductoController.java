@@ -3,6 +3,7 @@ package com.tallereslgr.inventario.api;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +63,11 @@ public class ProductoController {
     @GetMapping("/categorias/opciones")
     public List<CategoriaOption> obtenerCategorias() {
         return servicio.obtenerCategorias();
+    }
+
+    @PostMapping("/categorias")
+    public ResponseEntity<CategoriaOption> crearCategoria(@RequestBody CategoriaRequest solicitud) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicio.crearCategoria(solicitud));
     }
 
     @GetMapping("/buscar")

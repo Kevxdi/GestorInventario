@@ -27,6 +27,19 @@ describe('ProductoService', () => {
 
   afterEach(() => solicitudes.verify());
 
+  it('creates a category through the API', () => {
+    const nuevaCategoria = { id: 4, nombre: 'Repuestos' };
+
+    servicio.crearCategoria('Repuestos').subscribe((categoria) => {
+      expect(categoria).toEqual(nuevaCategoria);
+    });
+
+    const solicitud = solicitudes.expectOne('http://localhost:8080/api/productos/categorias');
+    expect(solicitud.request.method).toBe('POST');
+    expect(solicitud.request.body).toEqual({ nombre: 'Repuestos' });
+    solicitud.flush(nuevaCategoria);
+  });
+
   it('sends new products to the API and returns the saved product', () => {
     const nuevoProducto: NuevoProducto = {
       codigo: 'PRD-007',

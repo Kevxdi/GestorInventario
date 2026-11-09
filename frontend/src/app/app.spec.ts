@@ -81,6 +81,7 @@ describe('DashboardComponent', () => {
       [
         'obtenerProductos',
         'obtenerCategorias',
+        'crearCategoria',
         'guardarProducto',
         'actualizarProducto',
         'eliminarProducto',
@@ -89,6 +90,7 @@ describe('DashboardComponent', () => {
     );
     servicio.obtenerProductos.and.returnValue(of(productos));
     servicio.obtenerCategorias.and.returnValue(of(categorias));
+    servicio.crearCategoria.and.callFake((nombre) => of({ id: 3, nombre }));
     servicio.guardarProducto.and.returnValue(of(productos[0]));
     servicio.actualizarProducto.and.returnValue(of(productos[0]));
     servicio.eliminarProducto.and.returnValue(of({
@@ -127,6 +129,41 @@ describe('DashboardComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Taladro eléctrico');
     expect(compiled.textContent).not.toContain('Nivel de burbuja');
+  });
+
+  it('creates a category from the catalog panel and adds it to the options', () => {
+    const fixture = TestBed.createComponent(DashboardComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    (fixture.nativeElement as HTMLElement)
+      .querySelector<HTMLButtonElement>('.add-category-button')
+      ?.click();
+    fixture.detectChanges();
+    component.nombreNuevaCategoria = '  Repuestos  ';
+    component.crearCategoria();
+    fixture.detectChanges();
+
+    expect(servicio.crearCategoria).toHaveBeenCalledWith('Repuestos');
+    expect(component.categorias.some((categoria) =>
+      categoria.id === 3 && categoria.nombre === 'Repuestos'
+    )).toBeTrue();
+    expect(component.formularioCategoriaAbierto).toBeFalse();
+    expect(component.mensajeExito).toBe('Categoría creada correctamente.');
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Repuestos');
+  });
+
+  it('requires a valid category name before sending the request', () => {
+    const fixture = TestBed.createComponent(DashboardComponent);
+    const component = fixture.componentInstance;
+
+    component.crearCategoria();
+    expect(servicio.crearCategoria).not.toHaveBeenCalled();
+    expect(component.mensajeErrorCategoria).toContain('nombre');
+
+    component.nombreNuevaCategoria = 'x'.repeat(51);
+    component.crearCategoria();
+    expect(servicio.crearCategoria).not.toHaveBeenCalled();
   });
 
   it('saves a new product, closes the modal, and reloads inventory', () => {

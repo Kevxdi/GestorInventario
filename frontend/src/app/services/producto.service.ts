@@ -24,6 +24,10 @@ export class ProductoService {
     return this.http.get<Categoria[]>(`${this.apiUrl}/categorias/opciones`);
   }
 
+  crearCategoria(nombre: string): Observable<Categoria> {
+    return this.http.post<Categoria>(`${this.apiUrl}/categorias`, { nombre });
+  }
+
   guardarProducto(producto: NuevoProducto): Observable<Producto> {
     return this.http.post<Producto>(this.apiUrl, producto);
   }

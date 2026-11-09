@@ -27,6 +27,40 @@ class ProductoServiceTest {
     private final ProductoService servicio = new ProductoService(productos, categorias, jdbcTemplate);
 
     @Test
+    void creaCategoriaConNombreNormalizado() {
+        when(categorias.existsByNombreIgnoreCase("Repuestos")).thenReturn(false);
+        when(categorias.save(any(Categoria.class))).thenAnswer(invocacion -> {
+            Categoria categoria = invocacion.getArgument(0);
+            categoria.setId(4L);
+            return categoria;
+        });
+
+        CategoriaOption resultado = servicio.crearCategoria(new CategoriaRequest(" Repuestos "));
+
+        assertEquals(4L, resultado.id());
+        assertEquals("Repuestos", resultado.nombre());
+        verify(categorias).save(any(Categoria.class));
+    }
+
+    @Test
+    void rechazaCategoriaDuplicadaIgnorandoMayusculas() {
+        when(categorias.existsByNombreIgnoreCase("herramientas")).thenReturn(true);
+
+        assertThrows(ResponseStatusException.class,
+                () -> servicio.crearCategoria(new CategoriaRequest(" herramientas ")));
+        verify(categorias, never()).save(any(Categoria.class));
+    }
+
+    @Test
+    void rechazaNombreDeCategoriaVacioOMuyLargo() {
+        assertThrows(ResponseStatusException.class,
+                () -> servicio.crearCategoria(new CategoriaRequest("  ")));
+        assertThrows(ResponseStatusException.class,
+                () -> servicio.crearCategoria(new CategoriaRequest("x".repeat(51))));
+        verify(categorias, never()).save(any(Categoria.class));
+    }
+
+    @Test
     void guardaProductoAsociadoALaCategoriaSeleccionada() {
         Categoria categoria = new Categoria();
         categoria.setId(3L);

@@ -34,10 +34,14 @@ export class DashboardComponent implements OnInit {
   terminoBusqueda = '';
   mostrarArchivados = false;
   modalAbierto = false;
+  formularioCategoriaAbierto = false;
   cargando = true;
   guardando = false;
+  guardandoCategoria = false;
   productoEnAccionId: number | null = null;
   productoEditando: Producto | null = null;
+  nombreNuevaCategoria = '';
+  mensajeErrorCategoria = '';
   mensajeError = '';
   mensajeExito = '';
 
@@ -74,6 +78,50 @@ export class DashboardComponent implements OnInit {
 
   cantidadPorCategoria(categoria: string): number {
     return this.productosActivosListado.filter((producto) => producto.categoria === categoria).length;
+  }
+
+  alternarFormularioCategoria(): void {
+    if (this.guardandoCategoria) {
+      return;
+    }
+
+    this.formularioCategoriaAbierto = !this.formularioCategoriaAbierto;
+    this.nombreNuevaCategoria = '';
+    this.mensajeErrorCategoria = '';
+  }
+
+  crearCategoria(): void {
+    const nombre = this.nombreNuevaCategoria.trim();
+    if (this.guardandoCategoria) {
+      return;
+    }
+    if (!nombre || nombre.length > 50) {
+      this.mensajeErrorCategoria = 'Ingresa un nombre de hasta 50 caracteres.';
+      return;
+    }
+
+    this.guardandoCategoria = true;
+    this.mensajeErrorCategoria = '';
+    this.mensajeError = '';
+    this.mensajeExito = '';
+    this.productoService.crearCategoria(nombre).subscribe({
+      next: (categoria) => {
+        this.categorias = [...this.categorias, categoria]
+          .sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+        this.guardandoCategoria = false;
+        this.formularioCategoriaAbierto = false;
+        this.nombreNuevaCategoria = '';
+        this.mensajeExito = 'Categoría creada correctamente.';
+        this.changeDetector.markForCheck();
+      },
+      error: (error: { error?: { detail?: string; message?: string } }) => {
+        this.guardandoCategoria = false;
+        this.mensajeErrorCategoria = error.error?.detail
+          ?? error.error?.message
+          ?? 'No se pudo crear la categoría. Verifica la conexión e inténtalo de nuevo.';
+        this.changeDetector.markForCheck();
+      }
+    });
   }
 
   abrirModal(): void {

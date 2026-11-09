@@ -69,6 +69,9 @@
 .category-strip button { display: flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #dbe3ec; border-radius: 999px; background: #fff; color: #475569; cursor: pointer; white-space: nowrap; }
 .category-strip button.active, .category-strip button:hover { border-color: #2f6df6; background: #eef3ff; color: #245fd0; }
 .category-strip button span { display: grid; place-items: center; min-width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0; font-size: .7rem; }
+.category-strip button.add-category-button { border-style: dashed; color: #245fd0; }
+.category-form { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 24px; border-bottom: 1px solid #edf1f5; }
+.category-form-message { flex-basis: 100%; margin: 0; }
 .table-wrap { overflow-x: auto; }
 table { width: 100%; min-width: 760px; border-collapse: collapse; }
 th, td { padding: 15px 20px; border-bottom: 1px solid #edf1f5; text-align: left; }

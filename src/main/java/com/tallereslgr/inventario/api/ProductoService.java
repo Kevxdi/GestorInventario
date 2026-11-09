@@ -55,6 +55,27 @@ public class ProductoService {
                 .toList();
     }
 
+    @Transactional
+    public CategoriaOption crearCategoria(CategoriaRequest solicitud) {
+        if (solicitud == null || solicitud.nombre() == null || solicitud.nombre().isBlank()
+                || solicitud.nombre().trim().length() > 50) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "El nombre de la categoría es obligatorio y no puede superar 50 caracteres.");
+        }
+
+        String nombre = solicitud.nombre().trim();
+        if (categorias.existsByNombreIgnoreCase(nombre)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Ya existe una categoría con ese nombre.");
+        }
+
+        Categoria categoria = new Categoria();
+        categoria.setNombre(nombre);
+        Categoria guardada = categorias.save(categoria);
+        return new CategoriaOption(guardada.getId(), guardada.getNombre());
+    }
+
     public List<String> obtenerNombresCategorias() {
         return categorias.findAllByOrderByNombreAsc().stream()
                 .map(Categoria::getNombre)
