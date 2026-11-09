@@ -120,6 +120,17 @@ describe('DashboardComponent', () => {
     expect(fixture.componentInstance.productosBajos).toBe(1);
   });
 
+  it('does not show navigation links for unused modules', () => {
+    const fixture = TestBed.createComponent(DashboardComponent);
+    fixture.detectChanges();
+    const navigationText = fixture.nativeElement
+      .querySelector('nav[aria-label="Navegación principal"]')
+      ?.textContent;
+
+    expect(navigationText).not.toContain('Movimientos');
+    expect(navigationText).not.toContain('Reportes');
+  });
+
   it('filters products by category and search term', () => {
     const fixture = TestBed.createComponent(DashboardComponent);
     fixture.componentInstance.categoriaSeleccionada = 'Herramientas';

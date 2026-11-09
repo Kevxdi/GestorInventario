@@ -1,2 +1,14 @@
-com\tallereslgr\inventario\entity\Producto.class
 com\tallereslgr\inventario\InventarioApplication.class
+com\tallereslgr\inventario\api\CategoriaOption.class
+com\tallereslgr\inventario\api\ProductoController.class
+com\tallereslgr\inventario\api\ProductoRequest.class
+com\tallereslgr\inventario\api\ProductoService.class
+com\tallereslgr\inventario\api\CatalogoResponse.class
+com\tallereslgr\inventario\api\ProductoEliminacionResponse.class
+com\tallereslgr\inventario\entity\Categoria.class
+com\tallereslgr\inventario\api\CategoriaRequest.class
+com\tallereslgr\inventario\repository\CategoriaRepository.class
+com\tallereslgr\inventario\api\ProductoResponse.class
+com\tallereslgr\inventario\repository\ProductoRepository.class
+com\tallereslgr\inventario\api\ProductoCatalogo.class
+com\tallereslgr\inventario\entity\Producto.class

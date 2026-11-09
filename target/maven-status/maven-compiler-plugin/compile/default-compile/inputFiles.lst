@@ -1,2 +1,14 @@
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\CatalogoResponse.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\CategoriaOption.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\CategoriaRequest.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\ProductoCatalogo.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\ProductoController.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\ProductoEliminacionResponse.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\ProductoRequest.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\ProductoResponse.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\api\ProductoService.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\entity\Categoria.java
 C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\entity\Producto.java
 C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\InventarioApplication.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\repository\CategoriaRepository.java
+C:\Users\kevvr\Downloads\Universidad\7mo Semestre\Practicas II\GestorInventario\src\main\java\com\tallereslgr\inventario\repository\ProductoRepository.java
